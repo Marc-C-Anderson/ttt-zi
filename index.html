@@ -1,191 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="theme-color" content="#101827">
-		<title>Tic Tac Toe Z.I.M</title>
-		<style>
-			:root {
-				color-scheme: dark;
-				font-family: system-ui, sans-serif;
-				background: #101827;
-				color: #f8fafc;
-				font-synthesis: none;
-				text-rendering: optimizeLegibility;
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#101827">
+	<title>Tic Tac Toe Z.I.M</title>
+	<style>
+		:root {
+			color-scheme: dark;
+			font-family: system-ui, sans-serif;
+			background: #101827;
+			color: #f8fafc;
+			font-synthesis: none;
+			text-rendering: optimizeLegibility;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			min-height: 100svh;
+			margin: 0;
+			display: grid;
+			place-items: center;
+			padding: 1.5rem;
+		}
+
+		main {
+			width: min(100%, 28rem);
+			text-align: center;
+		}
+
+		h1 {
+			margin: 0 0 .5rem;
+			font-size: clamp(1.8rem, 7vw, 2.6rem);
+			letter-spacing: -.04em;
+		}
+
+		.subtitle {
+			margin: 0;
+			color: #aab7ca;
+		}
+
+		.status {
+			min-height: 1.75rem;
+			margin: 2rem 0 1rem;
+			font-size: 1.15rem;
+			font-weight: 650;
+		}
+
+		.board {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: clamp(.55rem, 2.5vw, .85rem);
+			aspect-ratio: 1;
+		}
+
+		.cell {
+			display: grid;
+			place-items: center;
+			min-width: 0;
+			border: 1px solid #334155;
+			border-radius: 1rem;
+			background: #1e293b;
+			color: #f8fafc;
+			font: inherit;
+			font-size: clamp(3rem, 18vw, 6rem);
+			font-weight: 750;
+			line-height: 1;
+			cursor: pointer;
+			transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+		}
+
+		.cell:not(:disabled):hover {
+			transform: translateY(-2px);
+			border-color: #64748b;
+			background: #26364c;
+		}
+
+		.cell:focus-visible,
+		.reset:focus-visible {
+			outline: 3px solid #38bdf8;
+			outline-offset: 3px;
+		}
+
+		.cell:disabled {
+			cursor: default;
+		}
+
+		.cell[data-mark="X"] {
+			color: #38bdf8;
+		}
+
+		.cell[data-mark="O"] {
+			color: #f472b6;
+		}
+
+		.cell.winner {
+			border-color: #a3e635;
+			background: #293b32;
+		}
+
+		.reset {
+			margin-top: 1.25rem;
+			padding: .75rem 1.15rem;
+			border: 0;
+			border-radius: 999px;
+			background: #e2e8f0;
+			color: #101827;
+			font: inherit;
+			font-weight: 700;
+			cursor: pointer;
+			transition: background-color 160ms ease, transform 160ms ease;
+		}
+
+		.reset:hover {
+			transform: translateY(-1px);
+			background: #fff;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+
+			*,
+			*::before,
+			*::after {
+				scroll-behavior: auto !important;
+				transition-duration: .01ms !important;
 			}
+		}
+	</style>
+</head>
 
-			* { box-sizing: border-box; }
+<body>
+	<main>
+		<h1>Tic Tac Toe</h1>
+		<p class="subtitle">Zero Instruction Machine implementation</p>
+		<p class="status" id="status" aria-live="polite">Player X's turn</p>
 
-			body {
-				min-height: 100svh;
-				margin: 0;
-				display: grid;
-				place-items: center;
-				padding: 1.5rem;
-			}
+		<div class="board" role="group" aria-label="Tic Tac Toe board">
+			<button class="cell" type="button" aria-label="Row 1, column 1"></button>
+			<button class="cell" type="button" aria-label="Row 1, column 2"></button>
+			<button class="cell" type="button" aria-label="Row 1, column 3"></button>
+			<button class="cell" type="button" aria-label="Row 2, column 1"></button>
+			<button class="cell" type="button" aria-label="Row 2, column 2"></button>
+			<button class="cell" type="button" aria-label="Row 2, column 3"></button>
+			<button class="cell" type="button" aria-label="Row 3, column 1"></button>
+			<button class="cell" type="button" aria-label="Row 3, column 2"></button>
+			<button class="cell" type="button" aria-label="Row 3, column 3"></button>
+		</div>
 
-			main {
-				width: min(100%, 28rem);
-				text-align: center;
-			}
+		<button class="reset" id="reset" type="button">New game</button>
+	</main>
+	<script src="./logic.js" type="module"></script>
+</body>
 
-			h1 {
-				margin: 0 0 .5rem;
-				font-size: clamp(1.8rem, 7vw, 2.6rem);
-				letter-spacing: -.04em;
-			}
-
-			.subtitle { margin: 0; color: #aab7ca; }
-
-			.status {
-				min-height: 1.75rem;
-				margin: 2rem 0 1rem;
-				font-size: 1.15rem;
-				font-weight: 650;
-			}
-
-			.board {
-				display: grid;
-				grid-template-columns: repeat(3, minmax(0, 1fr));
-				gap: clamp(.55rem, 2.5vw, .85rem);
-				aspect-ratio: 1;
-			}
-
-			.cell {
-				display: grid;
-				place-items: center;
-				min-width: 0;
-				border: 1px solid #334155;
-				border-radius: 1rem;
-				background: #1e293b;
-				color: #f8fafc;
-				font: inherit;
-				font-size: clamp(3rem, 18vw, 6rem);
-				font-weight: 750;
-				line-height: 1;
-				cursor: pointer;
-				transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
-			}
-
-			.cell:not(:disabled):hover {
-				transform: translateY(-2px);
-				border-color: #64748b;
-				background: #26364c;
-			}
-
-			.cell:focus-visible, .reset:focus-visible {
-				outline: 3px solid #38bdf8;
-				outline-offset: 3px;
-			}
-
-			.cell:disabled { cursor: default; }
-			.cell[data-mark="X"] { color: #38bdf8; }
-			.cell[data-mark="O"] { color: #f472b6; }
-			.cell.winner { border-color: #a3e635; background: #293b32; }
-
-			.reset {
-				margin-top: 1.25rem;
-				padding: .75rem 1.15rem;
-				border: 0;
-				border-radius: 999px;
-				background: #e2e8f0;
-				color: #101827;
-				font: inherit;
-				font-weight: 700;
-				cursor: pointer;
-				transition: background-color 160ms ease, transform 160ms ease;
-			}
-
-			.reset:hover { transform: translateY(-1px); background: #fff; }
-
-			@media (prefers-reduced-motion: reduce) {
-				*, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
-			}
-		</style>
-	</head>
-	<body>
-		<main>
-			<h1>Tic Tac Toe</h1>
-			<p class="subtitle">Zero Instruction Machine implementation</p>
-			<p class="status" id="status" aria-live="polite">Player X's turn</p>
-
-			<div class="board" role="group" aria-label="Tic Tac Toe board">
-				<button class="cell" type="button" aria-label="Row 1, column 1"></button>
-				<button class="cell" type="button" aria-label="Row 1, column 2"></button>
-				<button class="cell" type="button" aria-label="Row 1, column 3"></button>
-				<button class="cell" type="button" aria-label="Row 2, column 1"></button>
-				<button class="cell" type="button" aria-label="Row 2, column 2"></button>
-				<button class="cell" type="button" aria-label="Row 2, column 3"></button>
-				<button class="cell" type="button" aria-label="Row 3, column 1"></button>
-				<button class="cell" type="button" aria-label="Row 3, column 2"></button>
-				<button class="cell" type="button" aria-label="Row 3, column 3"></button>
-			</div>
-
-			<button class="reset" id="reset" type="button">New game</button>
-		</main>
-
-		<script>
-			const cells = [...document.querySelectorAll('.cell')];
-			const status = document.querySelector('#status');
-			const resetButton = document.querySelector('#reset');
-			const winningLines = [
-				[0, 1, 2], [3, 4, 5], [6, 7, 8],
-				[0, 3, 6], [1, 4, 7], [2, 5, 8],
-				[0, 4, 8], [2, 4, 6]
-			];
-
-			let board = Array(9).fill('');
-			let currentPlayer = 'X';
-			let gameOver = false;
-
-			function getWinningLine() {
-				return winningLines.find(([a, b, c]) =>
-					board[a] && board[a] === board[b] && board[a] === board[c]
-				);
-			}
-
-			function play(index) {
-				if (gameOver || board[index]) return;
-
-				board[index] = currentPlayer;
-				cells[index].textContent = currentPlayer;
-				cells[index].dataset.mark = currentPlayer;
-				cells[index].disabled = true;
-				cells[index].setAttribute('aria-label', `Row ${Math.floor(index / 3) + 1}, column ${index % 3 + 1}: ${currentPlayer}`);
-
-				const winningLine = getWinningLine();
-				if (winningLine) {
-					gameOver = true;
-					winningLine.forEach(cellIndex => cells[cellIndex].classList.add('winner'));
-					status.textContent = `Player ${currentPlayer} wins!`;
-					cells.forEach(cell => cell.disabled = true);
-				} else if (board.every(Boolean)) {
-					gameOver = true;
-					status.textContent = "It's a draw!";
-				} else {
-					currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-					status.textContent = `Player ${currentPlayer}'s turn`;
-				}
-			}
-
-			function resetGame() {
-				board = Array(9).fill('');
-				currentPlayer = 'X';
-				gameOver = false;
-				status.textContent = "Player X's turn";
-				cells.forEach((cell, index) => {
-					cell.textContent = '';
-					cell.disabled = false;
-					cell.classList.remove('winner');
-					delete cell.dataset.mark;
-					cell.setAttribute('aria-label', `Row ${Math.floor(index / 3) + 1}, column ${index % 3 + 1}`);
-				});
-				cells[0].focus();
-			}
-
-			cells.forEach((cell, index) => cell.addEventListener('click', () => play(index)));
-			resetButton.addEventListener('click', resetGame);
-		</script>
-	</body>
 </html>

@@ -1,7 +1,7 @@
 const state = new Map()
 
-export reset = () => {}
+export const reset = () => { }
 
-export step = newState => {
+export const step = newState => {
   return state
 }
