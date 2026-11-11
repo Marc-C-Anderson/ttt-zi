@@ -31,3 +31,6 @@ The `Piece` value is trinary.
 - `X obvious` 
 - `O duh...`
 
+## Board State
+
+
