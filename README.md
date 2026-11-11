@@ -25,9 +25,9 @@ Using Row/Column/Piece notation.
 13- | 23- | 33-  
 
 A blank board only needs 9 keys.
-The `Piece` value is urinary.
+The `Piece` value is trinary.
 
-- - empty
-- X obvious 
-- O duh...
+- `- empty`
+- `X obvious` 
+- `O duh...`
 
