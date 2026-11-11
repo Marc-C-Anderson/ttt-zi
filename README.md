@@ -18,11 +18,11 @@ It's sparse because the key eliminate many unreachable locations.
 
 Using Row/Column/Piece notation.
 
-11- | 21- | 31-
-----+-----+----
-12- | 22- | 32-
-----+-----+----
-13- | 23- | 33-
+11- | 21- | 31-  
+----+-----+----  
+12- | 22- | 32-  
+----+-----+----  
+13- | 23- | 33-  
 
 A blank board only needs 9 keys.
 
