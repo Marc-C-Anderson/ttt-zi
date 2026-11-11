@@ -16,6 +16,13 @@ The Sparse Memory version uses a map where the cell is encoded into a few charac
 
 It's sparse because the key eliminate many unreachable locations.
 
-Using Column/Row notation.
+Using Row/Column/Piece notation.
 
-| 11 | 
+11- | 21- | 31-
+----+-----+----
+12- | 22- | 32-
+----+-----+----
+13- | 23- | 33-
+
+A blank board only needs 9 keys.
+
