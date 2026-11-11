@@ -14,7 +14,7 @@ Even in a real game there are really only 5,000 combinations.
 
 The Sparse Memory version uses a map where the cell is encoded into a few characters and used as a key into a map. The value in the map is the next move.
 
-It's sparse because the key eliminate many unreachable locations.
+It's sparse because the key eliminates many unreachable locations.
 
 Using Row/Column/Piece notation.
 
@@ -25,4 +25,9 @@ Using Row/Column/Piece notation.
 13- | 23- | 33-  
 
 A blank board only needs 9 keys.
+The `Piece` value is urinary.
+
+- - empty
+- X obvious 
+- O duh...
 
