@@ -12,3 +12,4 @@ To encode all possible combinations in memory requires something in the order of
 
 Even in a real game there are really only 5,000 combinations.
 
+The Sparse Memory version uses a map where the cell is encoded into a few characters and used as a key into a map. The value in the map is the next move.
