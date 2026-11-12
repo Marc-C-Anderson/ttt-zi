@@ -37,7 +37,10 @@ Reduce the board to 9 symbols
 
 The value of any symbol can be
 
-- `-`
-- `X`
-- `O`
+- `-` empty
+- `X` X
+- `O` O
+
+`-|-|-`
+
 
