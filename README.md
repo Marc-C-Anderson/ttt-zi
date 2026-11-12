@@ -33,4 +33,11 @@ The `Piece` value is trinary.
 
 ## Board State
 
+Reduce the board to 9 symbols 
+
+The value of any symbol can be
+
+- `-`
+- `X`
+- `O`
 
