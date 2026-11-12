@@ -1,126 +1,125 @@
 /* style sheet */
 
 :root {
-  color-scheme: dark;
-  font-family: system-ui, sans-serif;
-  background: #101827;
-  color: #f8fafc;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+        color-scheme: dark;
+        font-family: system-ui, sans-serif;
+        background: #101827;
+        color: #f8fafc;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
 }
 
 * {
-  box-sizing: border-box;
+        box-sizing: border-box;
 }
 
 body {
-  min-height: 100svh;
-  margin: 0;
-  display: grid;
-  place-items: center;
-  padding: 1.5rem;
+        min-height: 100svh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 1.5rem;
 }
 
 main {
-  width: min(100%, 28rem);
-  text-align: center;
+        width: min(100%, 28rem);
+        text-align: center;
 }
 
-                h1 {
-                        margin: 0 0 .5rem;
-                        font-size: clamp(1.8rem, 7vw, 2.6rem);
-                        letter-spacing: -.04em;
-                }
+h1 {
+        margin: 0 0 .5rem;
+        font-size: clamp(1.8rem, 7vw, 2.6rem);
+        letter-spacing: -.04em;
+}
 
-                .subtitle {
-                        margin: 0;
-                        color: #aab7ca;
-                }
+.subtitle {
+        margin: 0;
+        color: #aab7ca;
+}
 
-                .status {
-                        min-height: 1.75rem;
-                        margin: 2rem 0 1rem;
-                        font-size: 1.15rem;
-                        font-weight: 650;
-                }
+.status {
+        min-height: 1.75rem;
+        margin: 2rem 0 1rem;
+        font-size: 1.15rem;
+        font-weight: 650;
+}
 
-                .board {
-                        display: grid;
-                        grid-template-columns: repeat(3, minmax(0, 1fr));
-                        gap: clamp(.55rem, 2.5vw, .85rem);
-                        aspect-ratio: 1;
-                }
+.board {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(.55rem, 2.5vw, .85rem);
+        aspect-ratio: 1;
+}
 
-                .cell {
-                        display: grid;
-                        place-items: center;
-                        min-width: 0;
-                        border: 1px solid #334155;
-                        border-radius: 1rem;
-                        background: #1e293b;
-                        color: #f8fafc;
-                        font: inherit;
-                        font-size: clamp(3rem, 18vw, 6rem);
-                        font-weight: 750;
-                        line-height: 1;
-                        cursor: pointer;
-                        transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
-                }
+.cell {
+        display: grid;
+        place-items: center;
+        min-width: 0;
+        border: 1px solid #334155;
+        border-radius: 1rem;
+        background: #1e293b;
+        color: #f8fafc;
+        font: inherit;
+        font-size: clamp(3rem, 18vw, 6rem);
+        font-weight: 750;
+        line-height: 1;
+        cursor: pointer;
+        transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
 
-                .cell:not(:disabled):hover {
-                        transform: translateY(-2px);
-                        border-color: #64748b;
-                        background: #26364c;
-                }
+.cell:not(:disabled):hover {
+        transform: translateY(-2px);
+        border-color: #64748b;
+        background: #26364c;
+}
 
-                .cell:focus-visible,
-                .reset:focus-visible {
-                        outline: 3px solid #38bdf8;
-                        outline-offset: 3px;
-                }
+.cell:focus-visible,
+.reset:focus-visible {
+        outline: 3px solid #38bdf8;
+        outline-offset: 3px;
+}
 
-                .cell:disabled {
-                        cursor: default;
-                }
+.cell:disabled {
+        cursor: default;
+}
 
-                .cell[data-mark="X"] {
-                        color: #38bdf8;
-                }
+.cell[data-mark="X"] {
+        color: #38bdf8;
+}
 
-                .cell[data-mark="O"] {
-                        color: #f472b6;
-                }
+.cell[data-mark="O"] {
+        color: #f472b6;
+}
 
-                .cell.winner {
-                        border-color: #a3e635;
-                        background: #293b32;
-                }
+.cell.winner {
+        border-color: #a3e635;
+        background: #293b32;
+}
 
-                .reset {
-                        margin-top: 1.25rem;
-                        padding: .75rem 1.15rem;
-                        border: 0;
-                        border-radius: 999px;
-                        background: #e2e8f0;
-                        color: #101827;
-                        font: inherit;
-                        font-weight: 700;
-                        cursor: pointer;
-                        transition: background-color 160ms ease, transform 160ms ease;
-                }
+.reset {
+        margin-top: 1.25rem;
+        padding: .75rem 1.15rem;
+        border: 0;
+        border-radius: 999px;
+        background: #e2e8f0;
+        color: #101827;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 160ms ease, transform 160ms ease;
+}
 
-                .reset:hover {
-                        transform: translateY(-1px);
-                        background: #fff;
-                }
+.reset:hover {
+        transform: translateY(-1px);
+        background: #fff;
+}
 
-                @media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
 
-                        *,
-                        *::before,
-                        *::after {
-                                scroll-behavior: auto !important;
-                                transition-duration: .01ms !important;
-                        }
-                }
-        
+        *,
+        *::before,
+        *::after {
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+        }
+}
