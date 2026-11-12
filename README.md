@@ -41,7 +41,9 @@ The value of any symbol can be
 - `X` X
 - `O` O
 
-`-|-|-`
-`-|-|-`
+```
+-|-|-
+-|-|-
+```
 
 
