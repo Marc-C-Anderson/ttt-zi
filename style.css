@@ -1,16 +1,13 @@
 /* style sheet */
 
-        
-        
-        
-                :root {
-                        color-scheme: dark;
-                        font-family: system-ui, sans-serif;
-                        background: #101827;
-                        color: #f8fafc;
-                        font-synthesis: none;
-                        text-rendering: optimizeLegibility;
-                }
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #101827;
+  color: #f8fafc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
 
                 * {
                         box-sizing: border-box;
