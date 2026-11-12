@@ -9,22 +9,22 @@
   text-rendering: optimizeLegibility;
 }
 
-                * {
-                        box-sizing: border-box;
-                }
+* {
+  box-sizing: border-box;
+}
 
-                body {
-                        min-height: 100svh;
-                        margin: 0;
-                        display: grid;
-                        place-items: center;
-                        padding: 1.5rem;
-                }
+body {
+  min-height: 100svh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
 
-                main {
-                        width: min(100%, 28rem);
-                        text-align: center;
-                }
+main {
+  width: min(100%, 28rem);
+  text-align: center;
+}
 
                 h1 {
                         margin: 0 0 .5rem;
