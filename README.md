@@ -44,6 +44,7 @@ The value of any symbol can be
 ```
 -|-|-
 -|-|-
+-|-|-
 ```
 
 
