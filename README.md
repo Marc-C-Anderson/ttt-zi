@@ -43,10 +43,16 @@ The value of any symbol can be
 - `X` X
 - `O` O
 
+A grid of symbols
+
 ```
--|-|-
--|-|-
--|-|-
+ s | s | s
+---+---+---
+ s | s | s
+---+---+---
+ s | s | s
 ```
 
+appears as
 
+`sssssssss`
