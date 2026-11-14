@@ -1,35 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#101827">
-	<title>Tic Tac Toe Z.I.M</title>
-	<script type="module" src="./game-logic.js"></script>
-	<link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  <!-- Load Inter and a hand-drawn marker font for authentic pen-and-paper X/O styling -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset and Base Paper Layout */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #faf8f5;
+      /* Subtle lined-paper texture feel */
+      background-image: radial-gradient(#e7e2d8 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: #1e293b;
+      padding: 1.5rem;
+    }
+
+    /* Main Wrapper */
+    .game-wrapper {
+      width: 100%;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Title */
+    h1 {
+      margin-bottom: 0.35rem;
+      font-size: 2.35rem;
+      font-family: 'Patrick Hand', cursive, sans-serif;
+      letter-spacing: 0.03em;
+      color: #1e293b;
+      text-align: center;
+    }
+
+    /* Dynamic Turn / Win / Draw Status Display */
+    .status {
+      font-size: 1.1rem;
+      margin-bottom: 1.75rem;
+      color: #475569;
+      font-weight: 600;
+      min-height: 1.65rem;
+      text-align: center;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .status.win-text {
+      color: #15803d;
+      transform: scale(1.05);
+    }
+
+    .status.draw-text {
+      color: #64748b;
+    }
+
+    /* Classic Pen-and-Paper 3x3 Hash (#) Grid (No outer border, zero gap) */
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      margin-bottom: 2rem;
+    }
+
+    /* Semantic <button> Grid Cells - Transparent & Borderless by default */
+    .cell {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      border: none;
+      font-family: 'Patrick Hand', cursive, sans-serif;
+      font-size: clamp(3.25rem, 15vw, 4.25rem);
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s ease, transform 0.12s ease;
+      user-select: none;
+      position: relative;
+    }
+
+    /* Selective nth-child borders to form the classic # hash shape */
+    /* Inner vertical lines (right border on column 1 and column 2) */
+    .cell:nth-child(3n + 1),
+    .cell:nth-child(3n + 2) {
+      border-right: 4px solid #1e293b;
+    }
+
+    /* Inner horizontal lines (bottom border on row 1 and row 2) */
+    .cell:nth-child(-n + 6) {
+      border-bottom: 4px solid #1e293b;
+    }
+
+    /* Subtle hover highlight on empty paper squares */
+    .cell:hover:not(:disabled) {
+      background-color: rgba(30, 41, 59, 0.04);
+    }
+
+    .cell:focus-visible {
+      outline: 3px dashed #2563eb;
+      outline-offset: -6px;
+    }
+
+    .cell:disabled {
+      cursor: default;
+    }
+
+    /* Blue Pen Ink for Player X */
+    .cell.x {
+      color: #2563eb;
+      animation: sketchIn 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Red Pen Ink for Player O */
+    .cell.o {
+      color: #dc2626;
+      animation: sketchIn 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Highlighter-style tint on the 3 winning cells */
+    .cell.win {
+      background-color: rgba(250, 204, 21, 0.32);
+    }
+
+    /* Clean Ink-Outlined Reset Button */
+    .reset-btn {
+      padding: 0.75rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1e293b;
+      background-color: #ffffff;
+      border: 2px solid #1e293b;
+      border-radius: 8px;
+      box-shadow: 3px 3px 0px #1e293b;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+    }
+
+    .reset-btn:hover {
+      background-color: #f1f5f9;
+    }
+
+    .reset-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #1e293b;
+    }
+
+    @keyframes sketchIn {
+      0% { transform: scale(0.65) rotate(-4deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+  </style>
 </head>
-
 <body>
-	<main>
-		<h1>Tic Tac Toe</h1>
-		<p class="subtitle">Zero Instruction Machine implementation</p>
-		<p class="status" id="status" aria-live="polite">Player X's turn</p>
 
-		<div class="board" role="group" aria-label="Tic Tac Toe board">
-			<button class="cell" type="button" aria-label="Row 1, column 1"></button>
-			<button class="cell" type="button" aria-label="Row 1, column 2"></button>
-			<button class="cell" type="button" aria-label="Row 1, column 3"></button>
-			<button class="cell" type="button" aria-label="Row 2, column 1"></button>
-			<button class="cell" type="button" aria-label="Row 2, column 2"></button>
-			<button class="cell" type="button" aria-label="Row 2, column 3"></button>
-			<button class="cell" type="button" aria-label="Row 3, column 1"></button>
-			<button class="cell" type="button" aria-label="Row 3, column 2"></button>
-			<button class="cell" type="button" aria-label="Row 3, column 3"></button>
-		</div>
+  <main class="game-wrapper">
+    <h1>Tic Tac Toe</h1>
+    
+    <!-- Live Status Banner -->
+    <div class="status" id="status" role="status" aria-live="polite">Player X's turn</div>
 
-		<button class="reset" id="reset" type="button">New game</button>
-	</main>
+    <!-- 3x3 Paper Grid built using 9 semantic <button> elements -->
+    <div class="board" id="board" role="grid" aria-label="Tic Tac Toe 3 by 3 paper grid">
+      <button type="button" class="cell" data-index="0" aria-label="Row 1, Column 1, empty"></button>
+      <button type="button" class="cell" data-index="1" aria-label="Row 1, Column 2, empty"></button>
+      <button type="button" class="cell" data-index="2" aria-label="Row 1, Column 3, empty"></button>
+      <button type="button" class="cell" data-index="3" aria-label="Row 2, Column 1, empty"></button>
+      <button type="button" class="cell" data-index="4" aria-label="Row 2, Column 2, empty"></button>
+      <button type="button" class="cell" data-index="5" aria-label="Row 2, Column 3, empty"></button>
+      <button type="button" class="cell" data-index="6" aria-label="Row 3, Column 1, empty"></button>
+      <button type="button" class="cell" data-index="7" aria-label="Row 3, Column 2, empty"></button>
+      <button type="button" class="cell" data-index="8" aria-label="Row 3, Column 3, empty"></button>
+    </div>
+
+    <!-- Reset Button -->
+    <button type="button" class="reset-btn" id="reset">Reset Board</button>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cells = document.querySelectorAll('.cell');
+      const statusText = document.getElementById('status');
+      const resetBtn = document.getElementById('reset');
+
+      let boardState = Array(9).fill('');
+      let currentPlayer = 'X';
+      let gameActive = true;
+
+      const winPatterns = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontal rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertical columns
+        [0, 4, 8], [2, 4, 6]             // Diagonals
+      ];
+
+      /**
+       * Handles clicking or tapping any button in the 3x3 paper grid.
+       */
+      function handleCellClick(e) {
+        const cell = e.target;
+        const index = parseInt(cell.getAttribute('data-index'), 10);
+
+        if (boardState[index] !== '' || !gameActive) return;
+
+        boardState[index] = currentPlayer;
+        cell.textContent = currentPlayer;
+        cell.classList.add(currentPlayer.toLowerCase());
+        cell.disabled = true;
+
+        const row = Math.floor(index / 3) + 1;
+        const col = (index % 3) + 1;
+        cell.setAttribute('aria-label', `Row ${row}, Column ${col}, marked ${currentPlayer}`);
+
+        checkResult();
+      }
+
+      /**
+       * Checks for a win, draw, or switches turns.
+       */
+      function checkResult() {
+        let winningCombo = null;
+
+        for (const pattern of winPatterns) {
+          const [a, b, c] = pattern;
+          if (
+            boardState[a] !== '' &&
+            boardState[a] === boardState[b] &&
+            boardState[a] === boardState[c]
+          ) {
+            winningCombo = pattern;
+            break;
+          }
+        }
+
+        if (winningCombo) {
+          statusText.textContent = `Player ${currentPlayer} wins!`;
+          statusText.classList.add('win-text');
+          gameActive = false;
+
+          winningCombo.forEach(index => cells[index].classList.add('win'));
+          cells.forEach(cell => (cell.disabled = true));
+          return;
+        }
+
+        if (!boardState.includes('')) {
+          statusText.textContent = "It's a draw!";
+          statusText.classList.add('draw-text');
+          gameActive = false;
+          return;
+        }
+
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        statusText.textContent = `Player ${currentPlayer}'s turn`;
+      }
+
+      /**
+       * Clears the paper grid for a fresh game.
+       */
+      function resetGame() {
+        boardState.fill('');
+        currentPlayer = 'X';
+        gameActive = true;
+
+        statusText.textContent = "Player X's turn";
+        statusText.classList.remove('win-text', 'draw-text');
+
+        cells.forEach((cell, index) => {
+          cell.textContent = '';
+          cell.disabled = false;
+          cell.classList.remove('x', 'o', 'win');
+
+          const row = Math.floor(index / 3) + 1;
+          const col = (index % 3) + 1;
+          cell.setAttribute('aria-label', `Row ${row}, Column ${col}, empty`);
+        });
+      }
+
+      cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+      resetBtn.addEventListener('click', resetGame);
+    });
+  </script>
+
 </body>
-
 </html>
